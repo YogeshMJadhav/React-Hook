@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 // import Row from 'Row'
 import axios from 'axios';
 
 //.............................. Function base Reactjs Hook...........................
+
 export default function App(props){
   const [name , setName ] = useState('Trushant');
   const [surname, setSurname ] = useState('Bhangre');
@@ -16,6 +17,10 @@ export default function App(props){
   function handledChangeSurname(e){
     setSurname(e.target.value);
   }
+
+  useEffect(()=>{
+    document.title = name + '' + surname + '';
+  })
   
   return(
     <form>
@@ -33,6 +38,7 @@ export default function App(props){
 
 
 //............................ simple state method in class base...................................
+
 // class App extends React.Component{
 //   constructor(props){
 //     super(props);
@@ -53,6 +59,15 @@ export default function App(props){
 //       surname:e.target.value
 //     })
 //   }
+
+//   componentDidMount() {
+//     document.title = this.state.name + '' + this.state.surname + '';
+//   }
+
+//   componentDidUpdate() {
+//     document.title = this.state.name + '' + this.state.surname + '';
+//   }
+  
 // render(){
 //   return (
 //     <div className="App">
