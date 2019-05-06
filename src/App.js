@@ -19,10 +19,22 @@ export default function App(props){
   }
 
   useEffect(()=>{
-    document.title = name + '' + surname + '';
+    document.title = name + '' + surname ;
   })
+
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(()=>{
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);    
+    return()=>{
+      window.removeEventListener('resize', handleResize);
+    }
+  })
+
   
   return(
+  <div className="App">
+  <h1>React Hook in Function Base</h1>
     <form>
       <label>name </label>
       <input value={name}
@@ -32,7 +44,12 @@ export default function App(props){
       <input value={surname}
         onChange={handledChangeSurname}
       />
+      <label>width </label>
+      <input value={width}
+      />
+
     </form>
+  </div>
   )
 }
 
@@ -44,9 +61,11 @@ export default function App(props){
 //     super(props);
 //     this.state = {
 //       name: "Trush",
-//       surname : "Bhangre"
+//       surname : "Bhangre",
+//       width: window.innerWidth,
 //     }
 //     // this.handledChange = this.handledChange.bind(this);
+//     this.handledChangeWidth = this.handledChangeWidth.bind(this);
 //   }
 //   handledChange = (e)=>{
 //     this.setState({
@@ -60,8 +79,15 @@ export default function App(props){
 //     })
 //   }
 
+//   handledChangeWidth = (e) =>{
+//     this.setState({
+//       width: window.innerWidth
+//     })
+//   }
+
 //   componentDidMount() {
 //     document.title = this.state.name + '' + this.state.surname + '';
+//     window.addEventListener('resize', this.handledChangeWidth);
 //   }
 
 //   componentDidUpdate() {
@@ -71,7 +97,7 @@ export default function App(props){
 // render(){
 //   return (
 //     <div className="App">
-//         <h1> Hook In Reactjs</h1>
+//         <h1>Simple state management</h1>
 //       <form>
 //         <label>name </label>
 //         <input value={this.state.name}
@@ -80,6 +106,10 @@ export default function App(props){
 //         <label>surname name </label>
 //         <input value={this.state.surname}
 //           onChange={this.handledChangeSurname}
+//         />
+//         <label>width </label>
+//         <input value={this.state.width}
+//           onChange={this.handledChangeWidth}
 //         />
 //       </form>
         
