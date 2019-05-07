@@ -7,50 +7,57 @@ import axios from 'axios';
 //.............................. Function base Reactjs Hook...........................
 
 export default function App(props){
-  const [name , setName ] = useState('Trushant');
-  const [surname, setSurname ] = useState('Bhangre');
+  const name = useFormInput('trush');
+  const surname = useFormInput('bhangre');
+  const width = useWindowWidth();
+  useDocumentTitle(name.value +'' + surname.value);
 
-  function handledChange(e){
-    setName(e.target.value);
-  }
-
-  function handledChangeSurname(e){
-    setSurname(e.target.value);
-  }
-
-  useEffect(()=>{
-    document.title = name + '' + surname ;
-  })
-
-  const [width, setWidth] = useState(window.innerWidth);
-  useEffect(()=>{
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);    
-    return()=>{
-      window.removeEventListener('resize', handleResize);
-    }
-  })
-
-  
   return(
   <div className="App">
   <h1>React Hook in Function Base</h1>
+
     <form>
       <label>name </label>
-      <input value={name}
-        onChange={handledChange}
+      <input {...name}
       />
       <label>surname </label>
-      <input value={surname}
-        onChange={handledChangeSurname}
+      <input {...surname}
       />
       <label>width </label>
       <input value={width}
       />
-
     </form>
   </div>
   )
+
+  function useFormInput(initialValue){
+    const[value, setValue] = useState(initialValue);
+    function handledChange(e){
+      setValue(e.target.value);
+    }
+    return{
+      value,
+      onChange: handledChange
+    };
+  }
+
+  function useDocumentTitle(title){
+    useEffect(()=>{
+      document.title = title ;
+    })
+  }
+
+  function useWindowWidth(){
+    const [width, setWidth] = useState(window.innerWidth);
+     useEffect(()=>{
+      const handleResize = () => setWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);    
+      return()=>{
+        window.removeEventListener('resize', handleResize);
+      }
+    })
+    return width;
+  }
 }
 
 
